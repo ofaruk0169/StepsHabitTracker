@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">StepsHabitTracker</string>
+    <string name="timeminutes">TimeMinutes</string>
+</resources>
