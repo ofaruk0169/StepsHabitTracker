@@ -12,6 +12,6 @@ class MainActivity : AppCompatActivity() {
         val myStreakMinutes: TextView = findViewById(R.id.streakTimeMinutes)
 
         // I will now start a time
-        //startTimer()
+        //start the timer here
     }
 }
