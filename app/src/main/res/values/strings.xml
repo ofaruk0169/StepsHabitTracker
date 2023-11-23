@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">StepsHabitTracker</string>
     <string name="timeminutes">TimeMinutes</string>
+    <string name="DefaultTime">00:00:00</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
 </resources>

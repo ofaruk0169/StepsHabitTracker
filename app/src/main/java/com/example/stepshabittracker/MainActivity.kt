@@ -1,13 +1,14 @@
 package com.example.stepshabittracker
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
 import com.example.stepshabittracker.databinding.ActivityMainBinding
-import java.util.Timer
 import kotlin.math.roundToInt
 
 
@@ -29,33 +30,65 @@ class MainActivity : AppCompatActivity() {
 
         serviceIntent = Intent(applicationContext, TimerService::class.java)
         registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
+
+        Log.d("YourTag", "Broadcast receiver registered successfully")
+
     }
 
     private fun resetTimer()
     {
-        //left off from here yesterday
+        stopTimer()
+        time = 0.0
+        binding.streakTimeMinutes.text = getTimeStringFromDouble(time)
     }
 
     private fun startStopTimer()
     {
-
+        if(timerStarted)
+            stopTimer()
+        else
+            startTimer()
     }
 
-    private val updateTime: BroadcastReceiver = object : BroadcastReceiver()
+    private fun startTimer()
     {
-        override fun onRecieve(context: Context, intent: Intent)
-        {
-            time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
-            binding.streakTimeMinutes.text = getTimeStringFromDouble(time)
+        serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
+        startService(serviceIntent)
+        binding.startStopButton.text = getString(R.string.stop)
+        binding.startStopButton.icon = AppCompatResources.getDrawable(this, R.drawable.baseline_pause_24)
+        timerStarted = true
+
+        Log.d("YourTag", "Timer started")
+    }
+
+    private fun stopTimer()
+    {
+        stopService(serviceIntent)
+        binding.startStopButton.text = getString(R.string.start)
+        binding.startStopButton.icon = AppCompatResources.getDrawable(this, R.drawable.baseline_play_arrow_24)
+        timerStarted = false
+
+        Log.d("YourTag", "Timer stopped")
+    }
+
+
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent != null) {
+                time = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
+                binding.streakTimeMinutes.text = getTimeStringFromDouble(time)
+                Log.d("YourTag", "Time updated: $time")
+
+            }
         }
     }
 
     private fun getTimeStringFromDouble(time: Double): String
     {
         val resultInt = time.roundToInt()
-        val hours = resultInt % 86400 / 3600
-        val minutes = resultInt % 86400 / 3600 / 60
-        val seconds = resultInt % 86400 / 3600 % 60
+        val hours = resultInt / 3600
+        val minutes = (resultInt % 3600) / 60
+        val seconds = resultInt % 60
 
         return makeTimeString(hours, minutes, seconds)
     }
