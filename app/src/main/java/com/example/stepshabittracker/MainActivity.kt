@@ -1,38 +1,30 @@
-package com.example.stepshabittracker
+
+import android.os.Bundle
+import androidx.activity.viewModels
 
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import com.example.stepshabittracker.TimerViewModel
+import com.example.stepshabittracker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    private lateinit var binding: ActivityMainBinding
+    private val viewModel by viewModels<TimerViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        //important buttons that are needed to interact with the application's UI.
-        val streakTimeMinutesTextView = findViewById<TextView>(R.id.streakTimeMinutes)
-        val changeTextButton = findViewById<Button>(R.id.resetButton)
-
-        // Create a callback to update the UI
-        val updateUICallback: (Int) -> Unit = { currentStreak ->
-            streakTimeMinutesTextView.text = "Current Streak: $currentStreak"
+        /*
+        binding.startButton.setOnClickListener {
+            viewModel.startTasks()
         }
 
-        val timerHandlerClass = TimerHandler(updateUICallback)
-        timerHandlerClass.startTimer()
-
-
-
-        val startStreakButton = findViewById<Button>(R.id.startStopButton)
-
-
-        //this is the button
-        changeTextButton.setOnClickListener {
-
+        binding.stopButton.setOnClickListener {
+            viewModel.stopTasks()
         }
+        */
     }
 }
