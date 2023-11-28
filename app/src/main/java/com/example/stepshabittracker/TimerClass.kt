@@ -2,7 +2,7 @@ package com.example.stepshabittracker
 import android.os.Handler
 import android.os.Looper
 
-class TimerHandler(private val callback: (Int) -> Unit)
+class TimerClass(private val callback: (Int) -> Unit)
 {
     private val mHandler = Handler(requireNotNull(Looper.myLooper()))
     public var currentStreak: Int = 0

@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
             streakTimeMinutesTextView.text = "Current Streak: $currentStreak"
         }
 
-        val timerHandlerClass = TimerHandler(updateUICallback)
-        timerHandlerClass.startTimer()
+        val timerClassClass = TimerClass(updateUICallback)
+        timerClassClass.startTimer()
 
 
 
