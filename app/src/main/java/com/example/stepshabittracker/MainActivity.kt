@@ -17,22 +17,5 @@ class MainActivity : AppCompatActivity() {
         val streakTimeMinutesTextView = findViewById<TextView>(R.id.streakTimeMinutes)
         val changeTextButton = findViewById<Button>(R.id.resetButton)
 
-        // Create a callback to update the UI
-        val updateUICallback: (Int) -> Unit = { currentStreak ->
-            streakTimeMinutesTextView.text = "Current Streak: $currentStreak"
-        }
-
-        val timerClassClass = TimerClass(updateUICallback)
-        timerClassClass.startTimer()
-
-
-
-        val startStreakButton = findViewById<Button>(R.id.startStopButton)
-
-
-        //this is the button
-        changeTextButton.setOnClickListener {
-
-        }
     }
 }
